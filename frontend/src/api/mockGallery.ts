@@ -1,5 +1,5 @@
 import { ExhibitionStatus, FrameStyle, RoomType, VisitorStatus } from '../types/enums';
-import type { Artwork, Exhibition, GalleryRoom, GuideAnnotation, VisitorLog } from '../types';
+import type { Artwork, Exhibition, GalleryRoom, GuideAnnotation, VisitSession, VisitorLog } from '../types';
 import { DEFAULT_LIGHTING } from '../constants/lighting';
 
 const image = (seed: string) => `https://picsum.photos/seed/${seed}/1200/840`;
@@ -169,5 +169,48 @@ export const visitors: VisitorLog[] = [
     viewedArtworkIds: ['art-103'],
     currentRoomId: 'room-side',
     onlineStatus: VisitorStatus.Left,
+  },
+];
+
+const ago = (minutes: number) => new Date(Date.now() - 1000 * 60 * minutes).toISOString();
+
+export const visitSessions: VisitSession[] = [
+  {
+    id: 'visit-a12-01',
+    visitorId: 'visitor-a12',
+    enteredAt: ago(58),
+    leftAt: ago(44),
+    staySeconds: 840,
+    status: VisitorStatus.Left,
+    stops: [
+      { artworkId: 'art-101', viewedAt: ago(57), staySeconds: 210 },
+      { artworkId: 'art-102', viewedAt: ago(53), staySeconds: 150 },
+      { artworkId: 'art-101', viewedAt: ago(50), staySeconds: 95 },
+      { artworkId: 'art-104', viewedAt: ago(47), staySeconds: 180 },
+    ],
+  },
+  {
+    id: 'visit-c77-01',
+    visitorId: 'visitor-c77',
+    enteredAt: ago(30),
+    leftAt: ago(18),
+    staySeconds: 720,
+    status: VisitorStatus.Left,
+    stops: [
+      { artworkId: 'art-103', viewedAt: ago(29), staySeconds: 260 },
+      { artworkId: 'art-101', viewedAt: ago(24), staySeconds: 120 },
+      { artworkId: 'art-103', viewedAt: ago(21), staySeconds: 60 },
+    ],
+  },
+  {
+    id: 'visit-a12-02',
+    visitorId: 'visitor-a12',
+    enteredAt: ago(14),
+    staySeconds: 840,
+    status: VisitorStatus.InGallery,
+    stops: [
+      { artworkId: 'art-101', viewedAt: ago(13), staySeconds: 300 },
+      { artworkId: 'art-102', viewedAt: ago(8), staySeconds: 200 },
+    ],
   },
 ];
