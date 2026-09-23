@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable } from 'dexie';
-import type { Artwork, Exhibition, GalleryRoom, GuideAnnotation, VisitorLog } from '../types';
+import type { Artwork, Exhibition, GalleryRoom, GuideAnnotation, VisitorLog, VisitSession } from '../types';
 
 export class GalleryDatabase extends Dexie {
   rooms!: EntityTable<GalleryRoom, 'id'>;
@@ -7,6 +7,7 @@ export class GalleryDatabase extends Dexie {
   exhibitions!: EntityTable<Exhibition, 'id'>;
   annotations!: EntityTable<GuideAnnotation, 'id'>;
   visitors!: EntityTable<VisitorLog, 'visitorId'>;
+  visitSessions!: EntityTable<VisitSession, 'id'>;
 
   constructor() {
     super('virtual-gallery-tour');
@@ -16,6 +17,9 @@ export class GalleryDatabase extends Dexie {
       exhibitions: 'id, status',
       annotations: 'id, artworkId',
       visitors: 'visitorId, currentRoomId, onlineStatus',
+    });
+    this.version(2).stores({
+      visitSessions: 'id, visitorId, enteredAt, onlineStatus',
     });
   }
 }
